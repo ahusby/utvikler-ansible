@@ -26,6 +26,7 @@
       private: yes
   roles:
     - linuximage
+    - vmware-viewagent
     - firefox
     - intellij
     - kubeconfigs

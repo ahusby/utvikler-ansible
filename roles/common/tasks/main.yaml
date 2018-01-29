@@ -1,4 +1,3 @@
-- import_tasks: firefox.yaml
 - import_tasks: chrome.yaml
 - import_tasks: java.yaml
 - import_tasks: maven.yaml
@@ -7,8 +6,3 @@
   yum:
     name: git
     state: latest
-- name: Specifying subnet for vmware-viewagent
-  lineinfile:
-    dest: /etc/vmware/viewagent-custom.conf
-    regexp: '#?Subnet='
-    line: "Subnet={{ vmware_subnet }}"

@@ -26,5 +26,6 @@
       private: yes
   roles:
     - linuximage
-    - kubeconfigs
+    - firefox
     - intellij
+    - kubeconfigs

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<proxy>
+  <name>{{ proxy_env.http_proxy.rsplit(':', 1)[0] }}</name>
+  <port>{{ proxy_env.http_proxy.rsplit(':', 1)[1] }}</port>
+  <noProxyHost>{{ proxy_env.no_proxy|replace(",", "\n") }}</noProxyHost>
+  <secretPassword></secretPassword>
+  <testUrl>https://jenkins-ci.org</testUrl>
+</proxy>

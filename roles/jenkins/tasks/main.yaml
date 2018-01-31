@@ -23,6 +23,13 @@
     dest: /etc/sysconfig/jenkins
     mode: 0600
 
+- name: copy proxy.xml
+  template:
+    src: templates/jenkins-proxy.xml.j2
+    dest: /var/lib/jenkins/proxy.xml
+    owner: jenkins
+    group: jenkins
+
 - name: Add jenkins to docker group
   user:
     name: jenkins

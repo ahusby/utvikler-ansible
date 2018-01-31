@@ -3,7 +3,7 @@
 # are downloading via proxy, and the DL speed is sometimes throttled
 - name: Download maven distros
   get_url:
-    url: "http://apache.uib.no/maven/maven-3/{{ item }}/binaries/apache-maven-{{ item }}-bin.tar.gz"
+    url: "https://apache.uib.no/maven/maven-3/{{ item }}/binaries/apache-maven-{{ item }}-bin.tar.gz"
     dest: "/opt/apache-maven-{{ item }}-bin.tar.gz"
     timeout: 60
   with_items:

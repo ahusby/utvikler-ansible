@@ -1,4 +1,19 @@
-- hosts: all
+- hosts: jenkins
+  become: yes
+  vars:
+    headless: True
+  roles:
+    - proxy
+    - certificates
+    - docker
+    - kubernetes
+    - git
+    - java
+    - node
+    - browser
+    - jenkins
+
+- hosts: linuximage
   become: yes
   vars_prompt:
     - name: "githubusername"
@@ -7,20 +22,6 @@
     - name: "githubpassword"
       prompt: "Enter your GitHub password/OAuth token"
       private: yes
-  roles:
-    - certificates
-    - docker
-    - kubernetes
-    - common
-
-- hosts: jenkins
-  become: yes
-  roles:
-    - jenkins
-
-- hosts: linuximage
-  become: yes
-  vars_prompt:
     - name: "ident"
       prompt: "Enter your NAV ident"
       private: no
@@ -32,8 +33,15 @@
       prompt: "Enter your NAV password"
       private: yes
   roles:
+    - proxy
+    - certificates
+    - docker
+    - kubernetes
+    - git
+    - java
+    - node
+    - browser
     - linuximage
     - vmware-viewagent
-    - firefox
     - jetbrains
     - kubeconfigs

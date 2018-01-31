@@ -1,0 +1,9 @@
+- name: Setup environment proxy
+  template: src=templates/environment.j2 dest=/etc/environment
+  when: proxy_env.http_proxy|default("") != ""
+
+- name: Install proxy cert
+  copy: src=files/webproxy.pem dest=/etc/pki/ca-trust/source/anchors/webproxy.pem
+
+- name: Enable update-ca-trust
+  command: /usr/bin/update-ca-trust

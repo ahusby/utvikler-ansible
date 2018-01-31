@@ -6,6 +6,7 @@
   become_user: "{{ ident|upper }}"
 
 - name: Git clone kubeconfig
+  ignore_errors: True
   git:
     repo: "http://{{ ident|upper }}:{{ ident_password }}@stash.devillo.no/scm/aura/kubeconfigs.git"
     dest: "/home/{{ ident|upper }}/kubeconfigs"
@@ -21,9 +22,9 @@
   file:
     path: "/home/{{ ident|upper }}/workspace/kubectx/kubectx"
     mode: "a+x"
-    
+
 - name: Sørg for at /home/{{ ident|upper }}/.local/bin/ finnes
-  file: 
+  file:
     path: "/home/{{ ident|upper }}/.local/bin/"
     state: directory
   become_user: "{{ ident|upper }}"

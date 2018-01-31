@@ -17,6 +17,12 @@
     name: jenkins
     state: latest
 
+- name: copy jenkins sysconfig
+  template:
+    src: templates/jenkins.sysconfig.j2
+    dest: /etc/sysconfig/jenkins
+    mode: 0600
+
 - name: Add jenkins to docker group
   user:
     name: jenkins

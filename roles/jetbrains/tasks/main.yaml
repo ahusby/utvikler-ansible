@@ -8,11 +8,14 @@
   file:
     path: "/home/{{ ident|upper }}/.local/share/JetBrains/Toolbox/bin"
     state: directory
+  become_user: "{{ ident|upper }}"
 
 - name: "unpack toolbox-{{ toolbox_version }}"
   command: "tar -xzf /opt/jetbrains-toolbox-{{ toolbox_version }}.tar.gz -C /home/{{ ident|upper }}/.local/share/JetBrains/Toolbox/bin --strip-components 1"
+  become_user: "{{ ident|upper }}"
 
 - name: create toolbox autostart desktop entry
   template:
     src: templates/jetbrains-toolbox-autostart.desktop.j2
     dest: "/home/{{ ident|upper }}/.config/autostart/jetbrains-toolbox.desktop"
+  become_user: "{{ ident|upper }}"

@@ -1,7 +1,7 @@
-- import_tasks: chrome.yaml
-- import_tasks: java.yaml
-- import_tasks: maven.yaml
-- import_tasks: node.yaml
+- include: chrome.yaml
+- include: java.yaml
+- include: maven.yaml
+- include: node.yaml
 - name: install git
   yum:
     name: git

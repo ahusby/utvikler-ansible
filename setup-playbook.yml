@@ -28,5 +28,5 @@
     - linuximage
     - vmware-viewagent
     - firefox
-    - intellij
+    - jetbrains
     - kubeconfigs

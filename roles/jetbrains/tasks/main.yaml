@@ -1,27 +1,18 @@
-- name: "download ideaIU-{{ idea_version }}"
+- name: "download toolbox-{{ toolbox_version }}"
   get_url:
-    url: "https://download.jetbrains.com/idea/ideaIU-{{ idea_version }}.tar.gz"
-    dest: "/opt/ideaIU-{{ idea_version }}.tar.gz"
-    timeout: 180
+    url: "https://download.jetbrains.com/toolbox/jetbrains-toolbox-{{ toolbox_version }}.tar.gz"
+    dest: "/opt/jetbrains-toolbox-{{ toolbox_version }}.tar.gz"
+    timeout: 60
 
-- name: create intellij install dir
-  file: path=/opt/ideaIU state=directory
-
-- name: "unpack ideaIU-{{ idea_version }}"
-  cmd: "tar -xzf /opt/ideaIU-{{ idea_version }}.tar.gz -C /opt/ideaIU --strip-components 1"
-
-- name: symlink idea.sh
+- name: create toolbox install dir
   file:
-    dest: /usr/bin/idea
-    src: /opt/ideaIU/bin/idea.sh
-    state: link
+    path: "/home/{{ ident|upper }}/.local/share/JetBrains/Toolbox/bin"
+    state: directory
 
-- name: create intellij desktop entry
-  block:
-    - template:
-        src: files/jetbrains-idea.desktop
-        dest: /usr/share/applications/jetbrains-idea.desktop
-    - copy:
-        src: /opt/ideaIU/bin/idea.png
-        dest: /usr/share/icons/hicolor/128x128/apps/idea.png
-        remote_src: yes
+- name: "unpack toolbox-{{ toolbox_version }}"
+  cmd: "tar -xzf /opt/jetbrains-toolbox-{{ toolbox_version }}.tar.gz -C /home/{{ ident|upper }}/.local/share/JetBrains/Toolbox/bin --strip-components 1"
+
+- name: create toolbox autostart desktop entry
+  template:
+    src: templates/jetbrains-toolbox-autostart.desktop.j2
+    dest: "/home/{{ ident|upper }}/.config/autostart/jetbrains-toolbox.desktop"

@@ -1,6 +1,3 @@
-#
-# Install Jenkins
-#
 - name: Add Jenkins repository
   yum_repository:
     name: Jenkins
@@ -15,9 +12,9 @@
     state: present
     key: https://jenkins-ci.org/redhat/jenkins-ci.org.key
 
-- name: "install jenkins {{ jenkins_version }}"
+- name: install latest jenkins
   yum:
-    name: "jenkins-{{ jenkins_version }}"
+    name: jenkins
     state: latest
 
 - name: Add jenkins to docker group
@@ -26,10 +23,7 @@
     group: docker
     append: yes
 
-#
-# git config for Jenkins
-#
-- name: Setup default git configuration
+- name: Setup jenkins git config
   template:
     src: templates/gitconfig.j2
     dest: /var/lib/jenkins/.gitconfig
@@ -37,9 +31,6 @@
     group: jenkins
     mode: 0644
 
-#
-# start jenkins service
-#
 - name: Enable and start jenkins service
   systemd:
     name: jenkins

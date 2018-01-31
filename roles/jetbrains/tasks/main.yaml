@@ -1,0 +1,21 @@
+- name: "download toolbox-{{ toolbox_version }}"
+  get_url:
+    url: "https://download.jetbrains.com/toolbox/jetbrains-toolbox-{{ toolbox_version }}.tar.gz"
+    dest: "/opt/jetbrains-toolbox-{{ toolbox_version }}.tar.gz"
+    timeout: 60
+
+- name: create toolbox install dir
+  file:
+    path: "/home/{{ ident|upper }}/.local/share/JetBrains/Toolbox/bin"
+    state: directory
+  become_user: "{{ ident|upper }}"
+
+- name: "unpack toolbox-{{ toolbox_version }}"
+  command: "tar -xzf /opt/jetbrains-toolbox-{{ toolbox_version }}.tar.gz -C /home/{{ ident|upper }}/.local/share/JetBrains/Toolbox/bin --strip-components 1"
+  become_user: "{{ ident|upper }}"
+
+- name: create toolbox autostart desktop entry
+  template:
+    src: templates/jetbrains-toolbox-autostart.desktop.j2
+    dest: "/home/{{ ident|upper }}/.config/autostart/jetbrains-toolbox.desktop"
+  become_user: "{{ ident|upper }}"

@@ -33,4 +33,7 @@
       private: yes
   roles:
     - linuximage
+    - vmware-viewagent
+    - firefox
+    - jetbrains
     - kubeconfigs

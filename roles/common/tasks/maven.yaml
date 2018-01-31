@@ -33,6 +33,7 @@
   command: "/usr/sbin/alternatives --set mvn maven-{{ maven_version }}"
 
 - name: Download maven settings.xml
+  ignore_errors: True
   get_url:
     url: "{{ maven_internal_url }}/software/maven/settings.xml"
     dest: "/opt/apache-maven-{{ item }}/conf/settings.xml"

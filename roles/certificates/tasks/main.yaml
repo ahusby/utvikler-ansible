@@ -1,19 +1,20 @@
-#
-# Proxy settings and certificates
-#
 - name: Setup environment proxy
   template: src=templates/environment.j2 dest=/etc/environment
   when: proxy_env.http_proxy|default("") != ""
 
+- name: clone ca-certificates
+  git:
+    repo: "https://{{ githubusername }}:{{ githubpassword }}@github.com/navikt/ca-certificates.git"
+    dest: /opt/ca-certificates
+    force: yes
+
+- name: install certs
+  command: ./install-certs.sh
+  args:
+    chdir: /opt/ca-certificates
+
 - name: Install proxy cert
   copy: src=files/webproxy.pem dest=/etc/pki/ca-trust/source/anchors/webproxy.pem
-
-- name: Install NAV Issuing Intern cert
-  copy: src=files/NAVIssuingIntern.pem dest=/etc/pki/ca-trust/source/anchors/NAVIssuingIntern.pem
-
-# *.nais.preprod.local is signed using the B27 Issuing CA Intern
-- name: Install *.nais.preprod.local cert
-  copy: src=files/B27_Issuing.pem dest=/etc/pki/ca-trust/source/anchors/B27_Issuing.pem
 
 - name: Enable update-ca-trust
   command: /usr/bin/update-ca-trust

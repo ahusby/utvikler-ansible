@@ -20,9 +20,20 @@ exit
 
 ### Generelt
 
-Du trenger repoet `utvikler-ansible` under `navikt`.
+Start med å klone dette repositoriet:
 ```
 git clone https://github.com/navikt/utvikler-ansible.git
+```
+
+I enkelte tilfeller er det nødvendig å spesifisere proxy-innstillinger:
+```
+HTTPS_PROXY=http://webproxy.company.com \
+  git clone -c http.sslVerify=false \
+  https://github.com/navikt/utvikler-ansible.git
+```
+
+Gå inn i mappa, endre inventory-fila og kjør playbooken:
+```
 cd utvikler-ansible
 
 cp example-inventory inventory
@@ -31,7 +42,7 @@ cp example-inventory inventory
 ansible-playbook -i inventory setup-playbook.yml
 ```
 
-Det kan være lurt å logge ut og så inn igjen etterpå, spesielt dersom du begynte med et helt nytt image.
+**PS**: Du bør logge ut og inn igjen etterpå siden enkelte installasjonsprosesser og endringer vil tre i kraft da.
 
 
 ### Ekstra

@@ -1,9 +1,3 @@
-- name: Install docker.adeo.no cert
-  copy: src=files/dockeradeono.pem dest=/etc/pki/ca-trust/source/anchors/dockeradeono.pem
-
-- name: Enable update-ca-trust
-  command: /usr/bin/update-ca-trust
-
 - name: Add docker repository
   yum_repository:
     name: Docker

@@ -1,5 +1,12 @@
 - hosts: all
   become: yes
+  vars_prompt:
+    - name: "githubusername"
+      prompt: "Enter your GitHub username"
+      private: no
+    - name: "githubpassword"
+      prompt: "Enter your GitHub password/OAuth token"
+      private: yes
   roles:
     - certificates
     - docker

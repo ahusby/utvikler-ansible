@@ -10,7 +10,7 @@
     state: directory
 
 - name: "unpack toolbox-{{ toolbox_version }}"
-  cmd: "tar -xzf /opt/jetbrains-toolbox-{{ toolbox_version }}.tar.gz -C /home/{{ ident|upper }}/.local/share/JetBrains/Toolbox/bin --strip-components 1"
+  command: "tar -xzf /opt/jetbrains-toolbox-{{ toolbox_version }}.tar.gz -C /home/{{ ident|upper }}/.local/share/JetBrains/Toolbox/bin --strip-components 1"
 
 - name: create toolbox autostart desktop entry
   template:

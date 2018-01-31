@@ -31,8 +31,7 @@
     src: /opt/firefox/firefox
     state: link
 
-- name: create firefox desktop entry
-  block:
+- block:
     - template:
         src: files/firefox.desktop
         dest: /usr/share/applications/firefox.desktop
@@ -48,3 +47,4 @@
         src: /opt/firefox/browser/icons/mozicon128.png
         dest: /usr/share/icons/hicolor/128x128/apps/firefox.png
         remote_src: yes
+  when: headless is not defined or headless == False

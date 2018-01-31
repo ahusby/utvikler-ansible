@@ -1,5 +1,7 @@
 - hosts: jenkins
   become: yes
+  vars:
+    headless: True
   roles:
     - proxy
     - certificates

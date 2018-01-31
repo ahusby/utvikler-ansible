@@ -9,7 +9,7 @@
     force: yes
 
 - name: install certs
-  command: ./install-certs.sh
+  command: ./install-certs.sh /etc/pki/ca-trust/source/anchors
   args:
     chdir: /opt/ca-certificates
 

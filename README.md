@@ -5,9 +5,9 @@ Automatiserer oppsett av Linux utviklerimage og Jenkins byggservere.
 
 ## Komme i gang
 
-### Fra et helt fersk Linuximage
+### ... fra et helt fersk Linuximage eller Jenkins-server
 
-Vi trenger `git` og `ansible` for å komme i gang.
+Vi trenger `git` og `ansible` for å komme i gang. Installer som `root` (det kan hende brukeren din ikke er satt opp med `sudo` enda):
 
 ```
 su - 
@@ -44,6 +44,25 @@ ansible-playbook -i inventory setup-playbook.yml
 
 **PS**: Du bør logge ut og inn igjen etterpå siden enkelte installasjonsprosesser og endringer vil tre i kraft da.
 
+### Kun sette opp jenkins?
+
+Viss du kun har behov for å installere en jenkins-server så kan du klare deg med en minimal inventory-fil:
+
+```
+[all:vars]
+http_proxy=http://webproxy.company.com:8088
+https_proxy=http://webproxy.company.com:8088
+no_proxy="localhost,127.0.0.1,.company.com,{{ansible_default_ipv4.address}}"
+
+[jenkins]
+localhost ansible_connection=local ansible_become_method=sudo
+
+[jenkins:vars]
+git_config_name=<jenkins git user>
+git_config_email=<jenkins git email>
+```
+Jenkins-hosten i eksemplet over er tilfeldigvis den samme maskinen vi kjører ansible-playbooken fra, 
+eksempelvis en server i iApp-sonen.
 
 ### Ekstra
 

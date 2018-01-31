@@ -9,8 +9,9 @@ git_config:
 
 docker_version: 17.03.1.ce
 kubectl_version: 1.8.4
+# either 3.3.9 or 3.5.2:
 maven_version: 3.3.9
 node_version: 8.9.1
-jenkins_version: 2.73.2
+toolbox_version: 1.6.2914
 
 vmware_subnet: 10.33.46.0/23

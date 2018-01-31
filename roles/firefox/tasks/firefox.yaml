@@ -1,0 +1,50 @@
+- name: remove any yum-installed firefox
+  yum:
+    name: firefox
+    state: absent
+
+- name: make sure required firefox dependencies are present
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - gtk3
+    - glib2
+    - pango
+    - libstdc++
+
+- name: download latest firefox
+  get_url:
+    url: https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US
+    dest: /opt/firefox-latest.tar.bz2
+    timeout: 60
+
+- name: unpack latest firefox
+  unarchive:
+    src: /opt/firefox-latest.tar.bz2
+    dest: /opt
+    remote_src: yes
+
+- name: symlink firefox
+  file:
+    dest: /usr/bin/firefox
+    src: /opt/firefox/firefox
+    state: link
+
+- name: create firefox desktop entry
+  block:
+    - template:
+        src: files/firefox.desktop
+        dest: /usr/share/applications/firefox.desktop
+    - copy:
+        src: "/opt/firefox/browser/chrome/icons/default/default{{ item }}.png"
+        dest: "/usr/share/icons/hicolor/{{ item }}x{{ item }}/apps/firefox.png"
+        remote_src: yes
+      with_items:
+        - 16
+        - 32
+        - 48
+    - copy:
+        src: /opt/firefox/browser/icons/mozicon128.png
+        dest: /usr/share/icons/hicolor/128x128/apps/firefox.png
+        remote_src: yes

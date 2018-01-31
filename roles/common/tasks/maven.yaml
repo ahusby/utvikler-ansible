@@ -1,0 +1,42 @@
+# we could download and unzip the archive using only the "unarchive" module,
+# but that module doesn't support "timeout" which is needed because we
+# are downloading via proxy, and the DL speed is sometimes throttled
+- name: Download maven distros
+  get_url:
+    url: "http://apache.uib.no/maven/maven-3/{{ item }}/binaries/apache-maven-{{ item }}-bin.tar.gz"
+    dest: "/opt/apache-maven-{{ item }}-bin.tar.gz"
+    timeout: 60
+  with_items:
+    - 3.3.9
+    - 3.5.2
+
+- name: Unpack maven distros
+  unarchive:
+    src: "/opt/apache-maven-{{ item }}-bin.tar.gz"
+    dest: /opt
+    remote_src: yes
+  with_items:
+    - 3.3.9
+    - 3.5.2
+
+- name: "Install alternative maven-{{ item }}"
+  command: >
+    /usr/sbin/alternatives
+      --install /usr/bin/mvn mvn /opt/apache-maven-{{ item }}/bin/mvn {{ item|replace(".", "") }}
+      --family maven-{{ item }}
+      --slave /usr/bin/mvnDebug mvnDebug /opt/apache-maven-{{ item }}/bin/mvnDebug
+  with_items:
+    - 3.3.9
+    - 3.5.2
+
+- name: "set maven {{ maven_version }} as default"
+  command: "/usr/sbin/alternatives --set mvn maven-{{ maven_version }}"
+
+- name: Download maven settings.xml
+  get_url:
+    url: "{{ maven_internal_url }}/software/maven/settings.xml"
+    dest: "/opt/apache-maven-{{ item }}/conf/settings.xml"
+    force: yes
+  with_items:
+    - 3.3.9
+    - 3.5.2

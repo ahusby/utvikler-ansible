@@ -12,7 +12,6 @@ kubectl_version: 1.8.4
 # either 3.3.9 or 3.5.2:
 maven_version: 3.3.9
 node_version: 8.9.1
-idea_version: 2017.3.3-no-jdk
 toolbox_version: 1.6.2914
 
 vmware_subnet: 10.33.46.0/23

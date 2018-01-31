@@ -1,19 +1,18 @@
-- name: clone ca-certificates
-  git:
-    repo: "https://{{ githubusername }}:{{ githubpassword }}@github.com/navikt/ca-certificates.git"
-    dest: /opt/ca-certificates
-    force: yes
-  when: githubpassword|default("") != ""
-
-- name: install certs
-  command: ./install-certs.sh /etc/pki/ca-trust/source/anchors
-  args:
-    chdir: /opt/ca-certificates
-  when: githubpassword|default("") != ""
+- block:
+    - name: clone ca-certificates
+      git:
+        repo: "https://{{ githubusername }}:{{ githubpassword }}@github.com/navikt/ca-certificates.git"
+        dest: /opt/ca-certificates
+        force: yes
+    - name: install certs
+      command: ./install-certs.sh /etc/pki/ca-trust/source/anchors
+      args:
+        chdir: /opt/ca-certificates
+  when: githubpassword is defined and githubpassword != ""
 
 - name: Install certs
   copy:
-    src: files/{{ item }}
+    src: /etc/pki/tls/certs/{{ item }}
     dest: /etc/pki/ca-trust/source/anchors/{{ item }}
     remote_src: yes
   with_items:
@@ -33,7 +32,7 @@
     - E34_Issuing_CA_Utvikling_CA.crt
     - E34_root_CA.crt
     - E34_sub_CA.crt
-  when: githubpassword|default("") == ""
+  when: githubpassword is not defined or githubpassword == ""
 
 - name: Enable update-ca-trust
   command: /usr/bin/update-ca-trust

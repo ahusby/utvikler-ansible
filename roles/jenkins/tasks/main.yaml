@@ -23,21 +23,48 @@
     dest: /etc/sysconfig/jenkins
     mode: 0600
 
-- name: create init dir
+- name: create dirs
   file:
-    path: /var/lib/jenkins/init.groovy.d
+    path: /var/lib/jenkins/{{ item }}
     state: directory
     owner: jenkins
     group: jenkins
+  with_items:
+    - init.groovy.d
+    - plugins
 
-- name: copy init scripts
-  template:
-    src: templates/jenkins-init-scripts/{{ item }}.groovy.j2
-    dest: /var/lib/jenkins/init.groovy.d/{{ item }}.groovy
+- name: copy plugin helper script
+  copy:
+    src: files/install-jenkins-plugin.sh
+    dest: /opt/install-jenkins-plugin.sh
+    mode: a+x
+
+- name: install azure-ad plugin
+  command: "/opt/install-jenkins-plugin.sh azure-ad"
+  when: azure_ad_tenant is defined and azure_ad_client is defined and azure_ad_secret is defined
+
+- name: fix ownership
+  file:
+    path: /var/lib/jenkins/plugins
     owner: jenkins
     group: jenkins
-  with_items:
-    - proxy
+    recurse: yes
+
+- name: copy proxy init script
+  template:
+    src: templates/jenkins-init-scripts/proxy.groovy.j2
+    dest: /var/lib/jenkins/init.groovy.d/proxy.groovy
+    owner: jenkins
+    group: jenkins
+  when: proxy_env.http_proxy|default("") != ""
+
+- name: copy azure-ad init script
+  template:
+    src: templates/jenkins-init-scripts/azure-ad.groovy.j2
+    dest: /var/lib/jenkins/init.groovy.d/azure-ad.groovy
+    owner: jenkins
+    group: jenkins
+  when: azure_ad_tenant is defined and azure_ad_client is defined and azure_ad_secret is defined
 
 - name: Add jenkins to docker group
   user:

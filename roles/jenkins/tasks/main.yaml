@@ -30,12 +30,14 @@
     owner: jenkins
     group: jenkins
 
-- name: copy init script
+- name: copy init scripts
   template:
-    src: templates/jenkins-init.groovy.j2
-    dest: /var/lib/jenkins/init.groovy.d/init.groovy
+    src: templates/jenkins-init-scripts/{{ item }}.groovy.j2
+    dest: /var/lib/jenkins/init.groovy.d/{{ item }}.groovy
     owner: jenkins
     group: jenkins
+  with_items:
+    - proxy
 
 - name: Add jenkins to docker group
   user:

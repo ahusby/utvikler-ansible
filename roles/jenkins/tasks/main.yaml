@@ -23,10 +23,17 @@
     dest: /etc/sysconfig/jenkins
     mode: 0600
 
-- name: copy proxy.xml
+- name: create init dir
+  file:
+    path: /var/lib/jenkins/init.groovy.d
+    state: directory
+    owner: jenkins
+    group: jenkins
+
+- name: copy init script
   template:
-    src: templates/jenkins-proxy.xml.j2
-    dest: /var/lib/jenkins/proxy.xml
+    src: templates/jenkins-init.groovy.j2
+    dest: /var/lib/jenkins/init.groovy.d/init.groovy
     owner: jenkins
     group: jenkins
 
@@ -47,5 +54,5 @@
 - name: Enable and start jenkins service
   systemd:
     name: jenkins
-    state: started
+    state: restarted
     enabled: yes

@@ -3,7 +3,7 @@ import jenkins.model.*;
 
 def instance = Jenkins.getInstance()
 
-def proxyConfiguration = new ProxyConfiguration("{{ proxy_env.http_proxy.rsplit(':', 1)[0] }}", {{ proxy_env.http_proxy.rsplit(':', 1)[1] }}, null, null, """
+def proxyConfiguration = new ProxyConfiguration("{{ proxy_env.http_proxy.rsplit(':', 1)[0].replace("http://", "") }}", {{ proxy_env.http_proxy.rsplit(':', 1)[1] }}, null, null, """
 {{ proxy_env.no_proxy|replace(",", "\n") }}
 """, "https://jenkins-ci.org")
 

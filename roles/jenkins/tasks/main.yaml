@@ -45,7 +45,7 @@
 
 - name: install active-directory plugin
   command: "/opt/install-jenkins-plugin.sh active-directory"
-  when: azure_ad_tenant is not defined or azure_ad_client is not defined or azure_ad_secret is not defined
+  when: internal_ad_domain
 
 - name: fix ownership
   file:
@@ -76,7 +76,7 @@
     dest: /var/lib/jenkins/init.groovy.d/internal-ad.groovy
     owner: jenkins
     group: jenkins
-  when: azure_ad_tenant is not defined or azure_ad_client is not defined or azure_ad_secret is not defined
+  when: internal_ad_domain is defined
 
 - name: copy authorization init script
   template:

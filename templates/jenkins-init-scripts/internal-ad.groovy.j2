@@ -3,7 +3,7 @@ import jenkins.model.*
 
 def instance = Jenkins.getInstance()
 
-def internalAd = new ActiveDirectorySecurityRealm("adeo.no", null, null, null, null)
+def internalAd = new ActiveDirectorySecurityRealm("{{ internal_ad_domain }}", null, null, null, null)
 
 instance.setSecurityRealm(internalAd)
 instance.save()

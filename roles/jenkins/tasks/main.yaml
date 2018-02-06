@@ -45,7 +45,7 @@
 
 - name: install active-directory plugin
   command: "/opt/install-jenkins-plugin.sh active-directory"
-  when: internal_ad_domain
+  when: internal_ad_domain is defined
 
 - name: fix ownership
   file:

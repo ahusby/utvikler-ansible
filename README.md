@@ -64,6 +64,22 @@ git_config_email=<jenkins git email>
 Jenkins-hosten i eksemplet over er tilfeldigvis den samme maskinen vi kjører ansible-playbooken fra, 
 eksempelvis en server i iApp-sonen.
 
+#### Integrasjon mot AD
+
+##### Azure AD
+
+Integrasjon mot Azure AD blir automatisk satt opp dersom du definerer:
+
+* `azure_ad_tenant`
+* `azure_ad_client`
+* `azure_ad_secret`
+
+##### Internal AD
+
+Integrasjon mot internal AD blir automatisk satt opp dersom du definerer:
+
+* `internal_ad_domain` (feks `adeo.no`)
+
 ### Ekstra
 
 Ønsker du å starte `bash` hver gang terminalen din starter, så kan du legge følgende i `.kshrc`:

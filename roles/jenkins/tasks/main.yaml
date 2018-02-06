@@ -78,6 +78,13 @@
     group: jenkins
   when: azure_ad_tenant is not defined or azure_ad_client is not defined or azure_ad_secret is not defined
 
+- name: copy authorization init script
+  template:
+    src: templates/jenkins-init-scripts/authorization.groovy.j2
+    dest: /var/lib/jenkins/init.groovy.d/authorization.groovy
+    owner: jenkins
+    group: jenkins
+
 - name: Add jenkins to docker group
   user:
     name: jenkins

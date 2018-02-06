@@ -43,6 +43,10 @@
   command: "/opt/install-jenkins-plugin.sh azure-ad"
   when: azure_ad_tenant is defined and azure_ad_client is defined and azure_ad_secret is defined
 
+- name: install active-directory plugin
+  command: "/opt/install-jenkins-plugin.sh active-directory"
+  when: azure_ad_tenant is not defined or azure_ad_client is not defined or azure_ad_secret is not defined
+
 - name: fix ownership
   file:
     path: /var/lib/jenkins/plugins
@@ -65,6 +69,14 @@
     owner: jenkins
     group: jenkins
   when: azure_ad_tenant is defined and azure_ad_client is defined and azure_ad_secret is defined
+
+- name: copy internal-ad init script
+  template:
+    src: templates/jenkins-init-scripts/internal-ad.groovy.j2
+    dest: /var/lib/jenkins/init.groovy.d/internal-ad.groovy
+    owner: jenkins
+    group: jenkins
+  when: azure_ad_tenant is not defined or azure_ad_client is not defined or azure_ad_secret is not defined
 
 - name: Add jenkins to docker group
   user:

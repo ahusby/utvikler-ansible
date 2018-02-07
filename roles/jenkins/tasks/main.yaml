@@ -46,11 +46,13 @@
     - active-directory
     - credentials-binding
     - git
-    - workflow-basic-steps
     - slack
     - pipeline-githubnotify-step
     - pipeline-build-step
+    - pipeline-stage-step
+    - workflow-basic-steps
     - workflow-cps
+    - workflow-durable-task-step
 
 - name: fix ownership
   file:

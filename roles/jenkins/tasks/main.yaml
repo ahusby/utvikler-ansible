@@ -109,3 +109,20 @@
     name: jenkins
     state: restarted
     enabled: yes
+
+- name: wait for jenkins to boot
+  wait_for:
+    path: /var/lib/jenkins/jenkins.install.UpgradeWizard.state
+
+- name: bypass setup wizard
+  copy:
+    src: /var/lib/jenkins/jenkins.install.UpgradeWizard.state
+    dest: /var/lib/jenkins/jenkins.install.InstallUtil.lastExecVersion
+    owner: jenkins
+    group: jenkins
+    remote_src: yes
+
+- name: restart jenkins service
+  systemd:
+    name: jenkins
+    state: restarted

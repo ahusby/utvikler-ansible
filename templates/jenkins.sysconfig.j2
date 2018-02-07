@@ -44,7 +44,7 @@ JENKINS_USER="jenkins"
 #
 # Options to pass to java when running Jenkins.
 #
-PROXY_HOST="{{ proxy_env.http_proxy.rsplit(':', 1)[0].replace("http://", "")"
+PROXY_HOST="{{ proxy_env.http_proxy.rsplit(':', 1)[0].replace("http://", "") }}"
 PROXY_PORT={{ proxy_env.http_proxy.rsplit(':', 1)[1] }}
 
 JENKINS_JAVA_OPTIONS="-Djava.awt.headless=true -Dhttp.proxyHost=$PROXY_HOST -Dhttp.proxyPort=$PROXY_PORT"

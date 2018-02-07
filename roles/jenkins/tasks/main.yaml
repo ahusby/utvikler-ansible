@@ -39,13 +39,18 @@
     dest: /opt/install-jenkins-plugin.sh
     mode: a+x
 
-- name: install azure-ad plugin
-  command: "/opt/install-jenkins-plugin.sh azure-ad"
-  when: azure_ad_tenant is defined and azure_ad_client is defined and azure_ad_secret is defined
-
-- name: install active-directory plugin
-  command: "/opt/install-jenkins-plugin.sh active-directory"
-  when: internal_ad_domain is defined
+- name: install plugins
+  command: "/opt/install-jenkins-plugin.sh {{ item }}"
+  with_items:
+    - azure-ad
+    - active-directory
+    - credentials-binding
+    - git
+    - workflow-basic-steps
+    - slack
+    - pipeline-githubnotify-step
+    - pipeline-build-step
+    - workflow-cps
 
 - name: fix ownership
   file:

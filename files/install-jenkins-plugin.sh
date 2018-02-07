@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 function install_plugin {
-	download_plugin "$1" "$2"
+	download_plugin "$1" "${2:-latest}"
 	resolve_dependencies "$1"
 }
 
@@ -21,18 +21,31 @@ function download_plugin {
 }
 
 function resolve_dependencies {
-	for f in $(unzip -p "/var/lib/jenkins/plugins/$1".jpi META-INF/MANIFEST.MF | tr -d '\r' | tr '\n' '|' | sed -e 's#| ##g' | tr '|' '\n' | grep "^Plugin-Dependencies: " | sed -e 's#^Plugin-Dependencies: ##' | tr ',' '\n' | grep -v 'resolution:=optional')
+	deps=$(unzip -p "/var/lib/jenkins/plugins/$1".jpi META-INF/MANIFEST.MF | tr -d '\r' | tr '\n' '|' | sed -e 's#| ##g' | tr '|' '\n' | grep "^Plugin-Dependencies: " | sed -e 's#^Plugin-Dependencies: ##')
+
+	if [[ ! $deps ]]; then
+		echo " -> $1 has no dependencies"
+		return
+	fi
+
+	echo " -> $1 depends on $deps"
+
+	IFS=',' read -r -a array <<< "$deps"
+	for f in "${array[@]}"
 	do
-		plugin_name=${f%:*}
-		plugin_version=${f#*:}
-		if ! test -f "/var/lib/jenkins/plugins/${plugin_name}.jpi"
-		then
-			echo "Download: ${plugin_name} @ ${plugin_version}"
-			install_plugin "${plugin_name}" "${plugin_version}"
+		plugin_name="$(cut -d':' -f1 - <<< "$f")"
+		if [[ $f == *"resolution:=optional"* ]]; then
+			echo " -> skipping optional dependency $plugin_name"
 		else
-			echo "Skipping ${plugin_name} because /var/lib/jenkins/plugins/${plugin_name}.jpi exists"
+			if ! test -f "/var/lib/jenkins/plugins/${plugin_name}.jpi"
+			then
+				echo " -> installing dependency ${plugin_name}"
+				install_plugin "${plugin_name}"
+			else
+				echo " -> skipping dependency ${plugin_name} because /var/lib/jenkins/plugins/${plugin_name}.jpi exists"
+			fi
 		fi
 	done
 }
 
-install_plugin "$1" latest
+install_plugin "$1"

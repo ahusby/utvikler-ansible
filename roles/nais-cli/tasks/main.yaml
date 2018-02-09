@@ -1,0 +1,21 @@
+- name: Download nais-cli {{ nais_cli_version }}
+  get_url:
+    url: https://github.com/nais/naisd/releases/download/186.0.0/nais-linux-amd64.xz
+    dest: /tmp/nais-linux-amd64.xz
+    timeout: 60
+
+- name: Create nais-cli folder
+  file:
+    path: /opt/nais-cli/bin
+    state: directory
+
+- name: Uncompress nais-cli binary to /opt/bin/nais-cli/nais
+  unarchive:
+    src: /tmp/nais-linux-amd64.xz
+    dest: /opt/nais-cli/bin
+
+- name: Copy nais-cli.sh to append nais-cli installation folder to PATH
+  copy:
+    src: files/nais-cli.sh
+    dest: /etc/profile.d/nais-cli.sh
+    mode: 755

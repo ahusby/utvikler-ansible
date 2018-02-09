@@ -23,8 +23,8 @@
     path: /opt/nais-cli/bin/nais
     mode: 0755
 
-- name: Copy nais-cli.sh to append nais-cli installation folder to PATH
-  copy:
-    src: files/nais-cli.sh
-    dest: /etc/profile.d/nais-cli.sh
-    mode: 0755
+- name: Symlink nais-cli to /usr/bin/nais
+  file:
+    path: /opt/nais-cli/bin/nais
+    dest: /usr/bin/nais
+    state: link

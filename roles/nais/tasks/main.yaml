@@ -16,7 +16,7 @@
 
 - name: Uncompress nais-cli binary to /opt/bin/nais-cli/nais
 # Currently it seems like the unarchive doesn't support .xz files
-  command: bash -c "unxz < /tmp/nais-linux-amd64.xz > /opt/nais-cli/bin/nais"
+  shell: unxz < /tmp/nais-linux-amd64.xz > /opt/nais-cli/bin/nais
 
 - name: Make nais-cli executable
   file:

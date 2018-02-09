@@ -10,9 +10,8 @@
     state: directory
 
 - name: Uncompress nais-cli binary to /opt/bin/nais-cli/nais
-  unarchive:
-    src: /tmp/nais-linux-amd64.xz
-    dest: /opt/nais-cli/bin
+# Currently it seems like the unarchive doesn't support .xz files
+  command: bash -c "unxz < /tmp/nais-linux-amd64.xz > /opt/nais-cli/bin/nais"
 
 - name: Copy nais-cli.sh to append nais-cli installation folder to PATH
   copy:

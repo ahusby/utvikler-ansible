@@ -25,6 +25,6 @@
 
 - name: Symlink nais-cli to /usr/bin/nais
   file:
-    path: /opt/nais-cli/bin/nais
+    src: /opt/nais-cli/bin/nais
     dest: /usr/bin/nais
     state: link

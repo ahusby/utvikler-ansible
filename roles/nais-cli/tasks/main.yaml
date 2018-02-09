@@ -13,8 +13,13 @@
 # Currently it seems like the unarchive doesn't support .xz files
   command: bash -c "unxz < /tmp/nais-linux-amd64.xz > /opt/nais-cli/bin/nais"
 
+- name: Make nais-cli executable
+  file:
+    path: /opt/nais-cli/bin/nais
+    mode: 0755
+
 - name: Copy nais-cli.sh to append nais-cli installation folder to PATH
   copy:
     src: files/nais-cli.sh
     dest: /etc/profile.d/nais-cli.sh
-    mode: 755
+    mode: 0755

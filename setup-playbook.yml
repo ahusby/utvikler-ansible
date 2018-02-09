@@ -12,6 +12,7 @@
     - node
     - browser
     - jenkins
+    - xz
     - nais-cli
 
 - hosts: linuximage
@@ -46,4 +47,5 @@
     - vmware-viewagent
     - jetbrains
     - kubeconfigs
+    - xz
     - nais-cli

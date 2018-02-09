@@ -1,6 +1,6 @@
 - name: Download nais-cli {{ nais_cli_version }}
   get_url:
-    url: https://github.com/nais/naisd/releases/download/186.0.0/nais-linux-amd64.xz
+    url: https://github.com/nais/naisd/releases/download/{{ nais_cli_version }}/nais-linux-amd64.xz
     dest: /tmp/nais-linux-amd64.xz
     timeout: 60
 

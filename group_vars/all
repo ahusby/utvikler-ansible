@@ -13,5 +13,6 @@ kubectl_version: 1.8.4
 maven_version: 3.3.9
 node_version: 8.9.1
 toolbox_version: 1.6.2914
+nais_cli_version: 186.0.0
 
 vmware_subnet: 10.33.46.0/23

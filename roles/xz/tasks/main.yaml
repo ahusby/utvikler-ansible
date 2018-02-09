@@ -1,4 +1,0 @@
-- name: Install xz for uncompressing .xz archives
-  yum:
-    name: xz
-    state: latest

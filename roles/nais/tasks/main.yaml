@@ -1,0 +1,30 @@
+- name: Install xz for uncompressing .xz archives
+  yum:
+    name: xz
+    state: latest
+
+- name: Download nais-cli {{ nais_cli_version }}
+  get_url:
+    url: https://github.com/nais/naisd/releases/download/{{ nais_cli_version }}/nais-linux-amd64.xz
+    dest: /tmp/nais-linux-amd64.xz
+    timeout: 60
+
+- name: Create nais-cli folder
+  file:
+    path: /opt/nais-cli/bin
+    state: directory
+
+- name: Uncompress nais-cli binary to /opt/bin/nais-cli/nais
+# Currently it seems like the unarchive doesn't support .xz files
+  shell: unxz < /tmp/nais-linux-amd64.xz > /opt/nais-cli/bin/nais
+
+- name: Make nais-cli executable
+  file:
+    path: /opt/nais-cli/bin/nais
+    mode: 0755
+
+- name: Symlink nais-cli to /usr/bin/nais
+  file:
+    src: /opt/nais-cli/bin/nais
+    dest: /usr/bin/nais
+    state: link

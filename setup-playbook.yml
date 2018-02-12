@@ -12,6 +12,7 @@
     - node
     - browser
     - jenkins
+    - nais
 
 - hosts: linuximage
   become: yes
@@ -45,3 +46,4 @@
     - vmware-viewagent
     - jetbrains
     - kubeconfigs
+    - nais

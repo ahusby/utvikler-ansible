@@ -1,0 +1,10 @@
+import jenkins.model.*;
+
+def instance = Jenkins.getInstance()
+
+def rule = instance.getExtensionList(jenkins.security.s2m.MasterKillSwitchConfiguration.class)[0].rule
+rule.setMasterKillSwitch(true)
+//dismiss the warning because we don't care
+instance.getExtensionList(jenkins.security.s2m.MasterKillSwitchWarning.class)[0].disable(true)
+instance.save()
+println 'Disabled agent -> master security'

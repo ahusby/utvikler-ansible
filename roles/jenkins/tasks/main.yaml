@@ -108,6 +108,13 @@
     owner: jenkins
     group: jenkins
 
+- name: copy security disable agent master init script
+  template:
+    src: templates/jenkins-init-scripts/security-disable-agent-master.groovy.j2
+    dest: /var/lib/jenkins/init.groovy.d/security-disable-agent-master.groovy
+    owner: jenkins
+    group: jenkins
+
 - name: copy jnlp agent protocols init script
   template:
     src: templates/jenkins-init-scripts/configure-jnlp-agent-protocols.groovy.j2

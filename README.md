@@ -73,6 +73,7 @@ Integrasjon mot Azure AD blir automatisk satt opp dersom du definerer:
 * `azure_ad_tenant`
 * `azure_ad_client`
 * `azure_ad_secret`
+* `azure_ad_group`
 
 ##### Internal AD
 

@@ -1,3 +1,4 @@
+import com.microsoft.jenkins.azuread.AzureAdMatrixAuthorizationStrategy
 import com.microsoft.jenkins.azuread.AzureSecurityRealm
 import jenkins.model.*
 
@@ -6,4 +7,10 @@ def instance = Jenkins.getInstance()
 def azureAD = new AzureSecurityRealm("{{ azure_ad_tenant }}", "{{ azure_ad_client }}", "{{ azure_ad_secret }}")
 
 instance.setSecurityRealm(azureAD)
+instance.save()
+
+def strategy = new AzureAdMatrixAuthorizationStrategy()
+strategy.add(Jenkins.ADMINISTER, "{{ azure_ad_group }}")
+
+instance.setAuthorizationStrategy(strategy)
 instance.save()

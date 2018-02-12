@@ -76,7 +76,7 @@
     dest: /var/lib/jenkins/init.groovy.d/azure-ad.groovy
     owner: jenkins
     group: jenkins
-  when: azure_ad_tenant is defined and azure_ad_client is defined and azure_ad_secret is defined
+  when: azure_ad_tenant is defined and azure_ad_client is defined and azure_ad_secret is defined and azure_ad_group is defined
 
 - name: copy internal-ad init script
   template:
@@ -92,6 +92,7 @@
     dest: /var/lib/jenkins/init.groovy.d/authorization.groovy
     owner: jenkins
     group: jenkins
+  when: azure_ad_group is not defined
 
 - name: copy jnlp agent protocols init script
   template:

@@ -45,6 +45,7 @@ git_config_email=<git email for jenkins>
 # azure_ad_tenant=tenant
 # azure_ad_client=clientId
 # azure_ad_secret=superSecret
+# azure_ad_group=0000-GA-UTVIKLING-FRA-LAPTOP (c10e6466-4d28-4467-8e93-43cacfbcff92)
 
 # kommenter ut om internal AD skal konfigureres:
 # internal_ad_domain=adeo.no

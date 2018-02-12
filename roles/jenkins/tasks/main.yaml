@@ -50,6 +50,7 @@
     - pipeline-githubnotify-step
     - pipeline-build-step
     - pipeline-stage-step
+    - pipeline-stage-view
     - workflow-basic-steps
     - workflow-cps
     - workflow-durable-task-step

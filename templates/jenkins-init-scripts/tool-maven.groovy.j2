@@ -1,0 +1,11 @@
+import jenkins.model.*
+
+def inst = Jenkins.getInstance()
+
+def desc = inst.getDescriptor("hudson.tasks.Maven")
+
+def maven33 =  new hudson.tasks.Maven.MavenInstallation("maven-3.3.9", "/opt/apache-maven-3.3.9");
+def maven35 =  new hudson.tasks.Maven.MavenInstallation("maven-3.5.2", "/opt/apache-maven-3.5.2");
+
+desc.setInstallations(maven33, maven35)
+desc.save()

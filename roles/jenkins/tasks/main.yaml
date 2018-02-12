@@ -94,33 +94,18 @@
     group: jenkins
   when: azure_ad_group is not defined
 
-- name: copy disable remote cli init script
+- name: copy init scripts
   template:
-    src: templates/jenkins-init-scripts/disable-remote-cli.groovy.j2
-    dest: /var/lib/jenkins/init.groovy.d/disable-remote-cli.groovy
+    src: templates/jenkins-init-scripts/{{ item }}.groovy.j2
+    dest: /var/lib/jenkins/init.groovy.d/{{ item }}.groovy
     owner: jenkins
     group: jenkins
-
-- name: copy csrf init script
-  template:
-    src: templates/jenkins-init-scripts/configure-csrf.groovy.j2
-    dest: /var/lib/jenkins/init.groovy.d/configure-csrf.groovy
-    owner: jenkins
-    group: jenkins
-
-- name: copy security disable agent master init script
-  template:
-    src: templates/jenkins-init-scripts/security-disable-agent-master.groovy.j2
-    dest: /var/lib/jenkins/init.groovy.d/security-disable-agent-master.groovy
-    owner: jenkins
-    group: jenkins
-
-- name: copy jnlp agent protocols init script
-  template:
-    src: templates/jenkins-init-scripts/configure-jnlp-agent-protocols.groovy.j2
-    dest: /var/lib/jenkins/init.groovy.d/configure-jnlp-agent-protocols.groovy
-    owner: jenkins
-    group: jenkins
+  with_items:
+    - configure-csrf
+    - configure-jnlp-agent-protocols
+    - disable-remote-cli
+    - security-disable-agent-master
+    - tool-maven
 
 - name: Add jenkins to docker group
   user:

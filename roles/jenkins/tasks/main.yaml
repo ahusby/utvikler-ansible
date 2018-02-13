@@ -47,6 +47,7 @@
     - antisamy-markup-formatter
     - credentials-binding
     - git
+    - http_request
     - slack
     - pipeline-githubnotify-step
     - pipeline-build-step

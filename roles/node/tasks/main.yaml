@@ -14,6 +14,13 @@
 - name: "set nodejs {{ node_version }} as default"
   command: "/usr/sbin/alternatives --set node node-{{ node_version }}"
 
-- name: Setup npmrc
-  copy: src=files/npmrc dest=/etc/npmrc
+- name: setup npm config
+  command: npm config set {{ item.key }} {{ item.value }} --global
+  with_items:
+    - key: cafile
+      value: /etc/pki/ca-trust/source/anchors/webproxy.pem
+    - key: proxy
+      value: "{{ proxy_env.http_proxy }}"
+    - key: https-proxy
+      value: "{{ proxy_env.https_proxy }}"
   when: proxy_env.http_proxy|default("") != ""

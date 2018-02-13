@@ -104,6 +104,7 @@
   with_items:
     - configure-csrf
     - configure-jnlp-agent-protocols
+    - configure-git
     - disable-remote-cli
     - security-disable-agent-master
     - tool-maven

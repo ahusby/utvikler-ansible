@@ -51,6 +51,7 @@
     - pipeline-build-step
     - pipeline-stage-step
     - pipeline-stage-view
+    - pipeline-utility-steps
     - workflow-basic-steps
     - workflow-cps
     - workflow-durable-task-step

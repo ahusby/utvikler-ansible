@@ -44,6 +44,7 @@
   with_items:
     - azure-ad
     - active-directory
+    - antisamy-markup-formatter
     - credentials-binding
     - git
     - slack
@@ -105,6 +106,7 @@
     - configure-csrf
     - configure-jnlp-agent-protocols
     - configure-git
+    - configure-markup-formatter
     - disable-remote-cli
     - security-disable-agent-master
     - tool-maven

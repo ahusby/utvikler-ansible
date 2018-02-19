@@ -1,26 +1,2 @@
-- name: "Download and Install node-{{ node_version }}"
-  unarchive:
-    src: "https://nodejs.org/dist/v{{ node_version }}/node-v{{ node_version }}-linux-x64.tar.xz"
-    dest: /opt
-    remote_src: yes
-
-- name: "Install alternative node-{{ node_version }}"
-  command: >
-    /usr/sbin/alternatives
-      --install /usr/bin/node node /opt/node-v{{ node_version }}-linux-x64/bin/node {{ node_version|replace(".", "") }}
-      --family node-{{ node_version }}
-      --slave /usr/bin/npm npm /opt/node-v{{ node_version }}-linux-x64/bin/npm
-
-- name: "set nodejs {{ node_version }} as default"
-  command: "/usr/sbin/alternatives --set node node-{{ node_version }}"
-
-- name: setup npm config
-  command: npm config set {{ item.key }} {{ item.value }} --global
-  with_items:
-    - key: cafile
-      value: /etc/pki/ca-trust/source/anchors/webproxy.pem
-    - key: proxy
-      value: "{{ proxy_env.http_proxy }}"
-    - key: https-proxy
-      value: "{{ proxy_env.https_proxy }}"
-  when: proxy_env.http_proxy|default("") != ""
+- include: node_and_npm.yaml
+- include: yarn.yaml

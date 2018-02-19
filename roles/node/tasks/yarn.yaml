@@ -1,0 +1,16 @@
+- name: Add Yarn RPM repository
+  yum_repository:
+    name: Yarn
+    description: yarn package manager
+    file: yarn
+    baseurl: https://dl.yarnpkg.com/rpm/
+    enabled: true
+    gpgkey: https://dl.yarnpkg.com/rpm/pubkey.gpg
+    gpgcheck: true
+    repo_gpgcheck: true
+    state: present
+
+- name: Install Yarn
+  yum:
+    name: yarn
+    state: latest

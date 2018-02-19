@@ -50,7 +50,7 @@ NO_PROXY="*.adeo.no"
 
 JENKINS_JAVA_OPTIONS="-Djava.awt.headless=true -Dhttp.proxyHost=$PROXY_HOST -Dhttp.proxyPort=$PROXY_PORT"
 JENKINS_JAVA_OPTIONS="$JENKINS_JAVA_OPTIONS -Dhttps.proxyHost=$PROXY_HOST -Dhttps.proxyPort=$PROXY_PORT"
-JENKINS_JAVA_OPTIONS="-Dhttp.nonProxyHosts=$NO_PROXY"
+JENKINS_JAVA_OPTIONS="$JENKINS_JAVA_OPTIONS -Dhttp.nonProxyHosts=$NO_PROXY"
 
 ## Type:        integer(0:65535)
 ## Default:     8080
